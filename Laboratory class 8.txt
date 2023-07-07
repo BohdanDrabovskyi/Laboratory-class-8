@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int f(int n) {
+    if (n == 0)
+        return 1;
+    else
+        return n * f(n - 1);
+}
+
+int count(char w[]) {
+    int l = strlen(w);
+    int y[26] = {0}; 
+
+    for (int i = 0; i < l; i++) {
+        if (w[i] >= 'a' && w[i] <= 'z')
+            y[w[i] - 'a']++;
+        else if (w[i] >= 'A' && w[i] <= 'Z')
+            y[w[i] - 'A']++;
+    }
+
+    int AC = f(l);
+    for (int i = 0; i < 26; i++) {
+        if (y[i] > 1)
+            AC /= f(y[i]);
+    }
+
+    return AC;
+}
+
+int main() {
+    char x[15];
+
+    printf("Enter the word: ");
+    scanf("%s", x);
+
+    int res = count(x);
+
+    printf("Number of anagrams: %d\n", res);
+
+    return 0;
+}
